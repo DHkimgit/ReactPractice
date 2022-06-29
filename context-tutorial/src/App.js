@@ -1,45 +1,53 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-const MyContext = createContext("defaule value");
-// 디폴트 설정
+const CounterContext = createContext();
 
-function useMycontext() {
-  const value = useContext(MyContext);
+const CountProvider = ({children}) => {
+  const counterState = useState(1);
+  return(
+    <CounterContext.Provider value={counterState} >
+      {children}
+    </CounterContext.Provider>
+  )
+}
+
+const useCounterState = () => {
+  const value = useContext(CounterContext);
   if (value === undefined) {
-    throw new Error("useMyContext should be used within MyContext.Provider");
-  } // .Provider 를 깜빡하면 오류를 띄우게 설정
+    throw new Error('useCounterState should be used within CounterProvider');
+  }
   return value;
 }
-// 커스텀 훅을 사용하기
 
 function App() {
   return (
-    <MyContext.Provider value="Hello World">
-      <GrateComponent />
-    </MyContext.Provider>
-  );
+    <CountProvider>
+      <div>
+        <Value />
+        <Button />
+      </div>
+    </CountProvider>
+  )
 }
-const GrateComponent = () => {
+
+const Value = () => {
+  const [counter] = useCounterState();
+  return(
+    <h1>{counter}</h1>
+  )
+}
+
+const Button = () => {
+  const [, setCounter] = useCounterState();
+  const increase = () => {setCounter((prev) => prev + 1)};
+  const decrease = () => {setCounter((prev) => prev - 1)};
   return (
     <div>
-      <FirstComponent />
-      <SecondComponent />
-      <ThirdComponent />
+      <button onClick={increase}>+</button>
+      <button onClick={decrease}>-</button>
     </div>
-  );
-};
-
-const FirstComponent = () => {
-  const value = useMycontext();
-  return <div>First Component says: "{value}"</div>;
-};
-const SecondComponent = () => {
-  const value = useMycontext();
-  return <div>Second Component says: "{value}"</div>;
-};
-const ThirdComponent = () => {
-  const value = useMycontext();
-  return <div>Third Component says: "{value}"</div>;
-};
+  )
+}
 
 export default App;
+//tellwindcss
