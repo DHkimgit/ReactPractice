@@ -1,4 +1,4 @@
-import React, {useState, ErrorBoundery} from 'react';
+import React, {useState} from 'react';
 import { useSetRecoilState } from 'recoil';
 import { todoListState } from './TodoList';
 
@@ -7,14 +7,15 @@ function TodoItemCreator() {
   const setTodoList = useSetRecoilState(todoListState);;
 
   const addItem = () => {
-    setTodoList((oldTodoList) => [
+    
+    {inputValue === '' ? alert('input value'): setTodoList((oldTodoList) => [
       ...oldTodoList,
       {
         id: getId(),
         text: inputValue,
         isComplete: false,
       },
-    ])
+    ])}
     setInputValue('');
   };
 

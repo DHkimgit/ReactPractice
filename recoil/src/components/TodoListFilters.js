@@ -32,7 +32,7 @@ function TodoListFilters() {
 
   return(
     <>
-      Filter:
+      Filter: 
       <select value={filter} onChange={updateFilter}>
         <option value="Show All">All</option>
         <option value="Show Completed">Completed</option>
