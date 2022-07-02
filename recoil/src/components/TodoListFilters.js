@@ -2,7 +2,7 @@ import React from 'react';
 import {atom, selector, useRecoilState} from 'recoil';
 import { todoListState } from './TodoList';
 
-const todoListFilterState = atom({
+export const todoListFilterState = atom({
   key: 'todoListFilterState',
   default: 'Show All',
 });

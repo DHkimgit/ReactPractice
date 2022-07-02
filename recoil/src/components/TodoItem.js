@@ -1,10 +1,10 @@
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { todoListState } from './TodoList';
 
-function TodoItem() {
-  const [todoList, setTodoList] = useSetRecoilState(todoListState);
-  const index = todoList.findIndex((listItem) => listItem=== item);
+function TodoItem({item}) {
+  const [todoList, setTodoList] = useRecoilState(todoListState);
+  const index = todoList.findIndex((listItem) => listItem === item);
 
   const editItemText = ({target: {value}}) => {
     const newList = replaceItemAtIndex(todoList, index, {
@@ -22,7 +22,7 @@ function TodoItem() {
     });
 
     setTodoList(newList);
-  }
+  };
 
   const deleteItem = () => {
     const newList = removeItemAtIndex(todoList, index);
@@ -30,7 +30,7 @@ function TodoItem() {
     setTodoList(newList);
   };
 
-  return(
+  return (
     <div>
       <input type="text" value={item.text} onChange={editItemText} />
       <input
@@ -40,7 +40,7 @@ function TodoItem() {
       />
       <button onClick={deleteItem}>X</button>
     </div>
-  )
+  );
 }
 
 function replaceItemAtIndex(arr, index, newValue) {
